@@ -23,7 +23,9 @@ export const register = async (req, res) => {
     res.json({
       id: userSaved._id,
       username: userSaved.username,
-      email: userSaved.email
+      email: userSaved.email,
+      createAt: userSaved.createAt,
+      updateAt: userSaved.updateAt
     })
   } catch (error) {
     console.log(error)
@@ -54,7 +56,9 @@ export const login = async (req, res) => {
     res.json({
       id: userFound._id,
       username: userFound.username,
-      email: userFound.email
+      email: userFound.email,
+      createAt: userFound.createAt,
+      updateAt: userFound.updateAt
     })
   } catch (error) {
     console.log(error)
@@ -65,4 +69,17 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {
   res.cookie('token', '', { expires: new Date() })
   res.sendStatus(200)
+}
+
+export const profile = async (req, res) => {
+  const userFound = await User.findById(req.user.id)
+  if (!userFound) return res.status(400).json({ message: 'User not found' })
+
+  res.json({
+    id: userFound._id,
+    username: userFound.username,
+    email: userFound.email,
+    createAt: userFound.createAt,
+    updateAt: userFound.updateAt
+  })
 }
