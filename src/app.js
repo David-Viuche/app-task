@@ -1,11 +1,14 @@
 import express from 'express'
 import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 
 import authRoutes from './routes/auth.route.js'
 import taskRoutes from './routes/task.route.js'
 
 const app = express()
+
+app.use(cors())
 
 app.use(morgan('dev'))
 app.use(express.json())
